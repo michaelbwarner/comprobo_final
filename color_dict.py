@@ -10,9 +10,11 @@ import math
 from sklearn.feature_extraction.text import TfidfTransformer
 
 # this file builds a color dictionary based off the caltech library
-# hsv colors are k-means grouped into 32 colors
+# hsv colors are k-means grouped into 16 colors
 
 #categories = [f for f in listdir('../101_ObjectCategories') if isdir(join('../101_ObjectCategories',f)) and f != 'BACKGROUND_Google']
+
+#test set of categories
 categories = ['dalmatian', 'peeps',  'laptop', 'airplanes', 'brain', 'kangaroo', 'chair', 'buddha', 'scorpion', 'grand_piano', 'Leopards']
 f1 = open('limited_16bins.pickle','wt')
 
@@ -48,12 +50,13 @@ for c_idx in range(len(categories)):
 		colors[pos: pos+(mini_size * mini_size)] = hsv
 		pos = pos + (mini_size * mini_size)
 
-
+#k-means clsuter the results into a color library
 clusters = KMeans(n_clusters=color_clusters)
 clusters.fit(colors) # fit all sampled descriptors to k means
 dump(clusters,f1)
 f1.close()
 
+#display the color library for reference, sanity check
 hsv_map = clusters.cluster_centers_.reshape(math.sqrt(color_clusters),math.sqrt(color_clusters), 3)
 cvt_map = np.zeros((math.sqrt(color_clusters),math.sqrt(color_clusters), 3), dtype='uint8')
 

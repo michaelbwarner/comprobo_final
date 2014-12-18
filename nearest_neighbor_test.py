@@ -13,6 +13,8 @@ k = 10
 color_clusters = 16
 images_per_cat = 50
 
+# this file trains a k-nearest neighbor classifier model on our data set and test the results
+
 f = open('BOC.pickle','r')
 ims = load(f)
 f.close()
